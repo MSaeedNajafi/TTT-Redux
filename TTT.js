@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import {
   updateBoard,
+  updateBoard4x4,
   resetBoard,
   resetScore,
   player1Score,
@@ -42,6 +43,10 @@ const generateBoard = (mapData, updateBoard) => {
               borderBottomLeftRadius: i === row.length - 1 && j === 0 ? 5 : 0,
               borderBottomRightRadius:
                 i === row.length - 1 && j === row.length - 1 ? 5 : 0,
+              width:
+                mapData.length === 3 ? 100 : mapData.length === 4 ? 75 : 50,
+              height:
+                mapData.length === 3 ? 100 : mapData.length === 4 ? 75 : 50,
             },
           ]}
           key={`cellID[${i}][${j}]`}
@@ -103,15 +108,16 @@ const getWinner = (board) => {
   return null;
 };
 
-export default function TTT() {
+export default function TTT(props) {
   const dispatch = useDispatch();
   const moves = useSelector((state) => state.moves);
-  const gboard = useSelector((state) => state.board);
+  const gboard = useSelector((state) =>
+    props.boardSize === "4x4" ? state.board4x4 : state.board
+  );
   const turnSym = useSelector((state) => state.turnSym);
   const player1wins = useSelector((state) => state.player1Score);
   const player2wins = useSelector((state) => state.player2Score);
   const winner = useSelector((state) => state.winner);
-
   useEffect(() => {
     const win = getWinner(gboard);
     if (win) {
@@ -165,7 +171,11 @@ export default function TTT() {
             if (winner) {
               return;
             }
-            dispatch(updateBoard(i, j));
+            if (props.boardSize === "4x4") {
+              dispatch(updateBoard4x4(i, j));
+            } else if (props.boardSize === "3x3") {
+              dispatch(updateBoard(i, j));
+            }
           })}
         </View>
         <View
@@ -212,7 +222,6 @@ export default function TTT() {
                 padding: 10,
                 borderColor: "white",
                 borderWidth: 2,
-                // borderRadius: 15,
                 color: "white",
               }}
             >
@@ -286,9 +295,10 @@ export default function TTT() {
               >
                 <Text
                   style={{
-                    fontSize: 24,
+                    // fontSize: 20,
                     textTransform: "uppercase",
                     color: "white",
+                    textAlign: "center",
                   }}
                 >
                   Reset borad
@@ -315,12 +325,45 @@ export default function TTT() {
               >
                 <Text
                   style={{
-                    fontSize: 24,
+                    // fontSize: 20,
                     textTransform: "uppercase",
                     color: "white",
+                    textAlign: "center",
                   }}
                 >
                   reset score
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: "black",
+                borderLeftColor: "white",
+                borderLeftWidth: 1,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  props.makeFalse();
+                  dispatch(resetBoard());
+                  dispatch(resetScore());
+                }}
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    // fontSize: 24,
+                    textTransform: "uppercase",
+                    color: "white",
+                    textAlign: "center",
+                  }}
+                >
+                  Change Grid
                 </Text>
               </TouchableOpacity>
             </View>
@@ -340,8 +383,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   cell: {
-    width: 100,
-    height: 100,
+    // width: 100,
+    // height: 100,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
