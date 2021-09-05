@@ -2,7 +2,8 @@
 
 ### how to run
 
-Install expo app on your device.
-Make sure you have running on you pc as well. after pulling the repo run this command: expo start
-
-Scan the QR code with your device, the app will lunch.
+1. pull this repository
+2. do: npm install
+3. do: npm install expo-cli
+4. do: expo start
+5. Scan the QR code with your device, the app will lunch.
