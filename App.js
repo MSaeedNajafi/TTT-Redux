@@ -34,8 +34,22 @@ const generateBoard = (mapData, updateBoard) => {
     for (let j = 0; j < row.length; j++) {
       rowContent.push(
         <TouchableOpacity
-          style={styles.cell}
-          key={`mapData[${i}][${j}]`}
+          style={[
+            styles.cell,
+            {
+              backgroundColor: mapData[i][j]
+                ? mapData[i][j] === "x"
+                  ? "#ffdb00"
+                  : "#7e9acf"
+                : "#7b7b7b",
+              borderTopLeftRadius: i === 0 && j === 0 ? 5 : 0,
+              borderTopRightRadius: i === 0 && j === row.length - 1 ? 5 : 0,
+              borderBottomLeftRadius: i === row.length - 1 && j === 0 ? 5 : 0,
+              borderBottomRightRadius:
+                i === row.length - 1 && j === row.length - 1 ? 5 : 0,
+            },
+          ]}
+          key={`cellID[${i}][${j}]`}
           onPress={() => {
             updateBoard(i, j);
           }}
@@ -46,7 +60,7 @@ const generateBoard = (mapData, updateBoard) => {
       );
     }
     board.push(
-      <View style={styles.row} key={`row[${i}]`}>
+      <View style={styles.row} key={`rowID_[${i}]`}>
         {rowContent}
       </View>
     );
@@ -101,6 +115,8 @@ export default function App() {
   const [startSym, stStartSym] = useState(X_Sym);
   const [count, setCount] = useState(0);
   const [winner, setWinner] = useState();
+  const [player1wins, setPlayer1Wins] = useState(0);
+  const [player2wins, setPlayer2Wins] = useState(0);
 
   const nextSym = () => {
     setTurnSym(turnSym === X_Sym ? O_Sym : X_Sym);
@@ -114,22 +130,28 @@ export default function App() {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
+            backgroundColor: "black",
+            borderBottomColor: "white",
+            borderBottomWidth: 1,
           }}
         >
           {!winner && (
-            <Text style={{ fontSize: 24 }}>
+            <Text style={{ fontSize: 24, color: "white" }}>
               {turnSym === X_Sym
                 ? `It's Player 1's Turn: ${turnSym}`
                 : `It's Player 2's Turn: ${turnSym}`}
             </Text>
           )}
-          {winner && <Text style={{ fontSize: 24 }}>{winner}</Text>}
+          {winner && (
+            <Text style={{ fontSize: 24, color: "white" }}>{winner}</Text>
+          )}
         </View>
         <View
           style={{
             flex: 6,
             alignItems: "center",
             justifyContent: "center",
+            backgroundColor: "#e01016",
           }}
         >
           {generateBoard(gameMap, (i, j) => {
@@ -146,26 +168,36 @@ export default function App() {
             setCount(count + 1);
             const win = getWinner(newMap);
             if (win) {
-              console.log(i, j);
               setWinner(
                 turnSym === X_Sym ? `Player 1 wins.` : `Player 2 wins.`
               );
+              setPlayer1Wins(turnSym === X_Sym ? player1wins + 1 : player1wins);
+              setPlayer2Wins(turnSym === O_Sym ? player2wins + 1 : player2wins);
             }
             if (!win && count === gameMap.length * gameMap.length - 1) {
               setWinner("It's a tie.");
             }
           })}
         </View>
-
         <View
           style={{
-            flex: 1,
+            padding: 10,
             alignItems: "center",
             justifyContent: "center",
+            backgroundColor: "black",
+            borderTopWidth: 1,
+            borderColor: "white",
           }}
         >
-          <Text style={{ fontSize: 20, textAlign: "center" }}>
-            <Text style={{ fontSize: 24 }}>{count}</Text> moves made.
+          <Text
+            style={{
+              fontSize: 24,
+              textTransform: "uppercase",
+              color: "white",
+              fontWeight: "bold",
+            }}
+          >
+            Score
           </Text>
         </View>
         <View
@@ -173,42 +205,149 @@ export default function App() {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
+            backgroundColor: "black",
             flexDirection: "row",
+            paddingLeft: 10,
+            paddingRight: 10,
+            paddingBottom: 10,
           }}
         >
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Text
+              style={{
+                fontSize: 24,
+                textTransform: "uppercase",
+                backgroundColor: "#e01016",
+                padding: 10,
+                borderColor: "white",
+                borderWidth: 2,
+                // borderRadius: 15,
+                color: "white",
+              }}
+            >
+              Player 1: {player1wins}
+            </Text>
+          </View>
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Text
+              style={{
+                fontSize: 24,
+                textTransform: "uppercase",
+                backgroundColor: "#e01016",
+                padding: 10,
+                borderColor: "white",
+                borderWidth: 2,
+                color: "white",
+              }}
+            >
+              Player 2: {player2wins}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#e31414",
+            borderTopWidth: 1,
+            borderColor: "white",
+          }}
+        >
+          <Text style={{ fontSize: 20, color: "white", textAlign: "center" }}>
+            <Text style={{ fontSize: 24, color: "white" }}>{count}</Text> moves
+            made.
+          </Text>
+        </View>
+        {winner && (
           <View
             style={{
               flex: 1,
               alignItems: "center",
               justifyContent: "center",
+              flexDirection: "row",
+              borderTopWidth: 1,
+              borderColor: "white",
+              backgroundColor: "black",
             }}
           >
-            <TouchableOpacity
+            <View
               style={{
                 flex: 1,
                 alignItems: "center",
                 justifyContent: "center",
-                width: "100%",
-              }}
-              onPress={() => {
-                setGameMap(gameBoard);
-                // setTurnSym(X_Sym);
-                stStartSym(startSym === X_Sym ? O_Sym : X_Sym);
-                setTurnSym(startSym);
-                setCount(0);
-                setWinner(undefined);
+                // backgroundColor: "cornsilk",
+                borderRightColor: "white",
+                borderRightWidth: 1,
               }}
             >
-              <Text
+              <TouchableOpacity
                 style={{
-                  fontSize: 24,
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+                onPress={() => {
+                  setGameMap(gameBoard);
+                  // setTurnSym(X_Sym);
+                  stStartSym(startSym === X_Sym ? O_Sym : X_Sym);
+                  setTurnSym(startSym);
+                  setCount(0);
+                  setWinner(undefined);
                 }}
               >
-                Reset borad
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 24,
+                    textTransform: "uppercase",
+                    color: "white",
+                  }}
+                >
+                  Reset borad
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: "black",
+                borderLeftColor: "white",
+                borderLeftWidth: 1,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  setGameMap(gameBoard);
+                  setTurnSym(X_Sym);
+                  setCount(0);
+                  setWinner(undefined);
+                  setPlayer1Wins(0);
+                  setPlayer2Wins(0);
+                }}
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 24,
+                    textTransform: "uppercase",
+                    color: "white",
+                  }}
+                >
+                  reset score
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        )}
       </SafeAreaView>
     </>
   );
@@ -223,12 +362,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   cell: {
-    width: 100,
-    height: 100,
+    width: gameBoard.length === 3 ? 100 : gameBoard.length === 4 ? 75 : 50,
+    height: gameBoard.length === 3 ? 100 : gameBoard.length === 4 ? 75 : 50,
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "black",
+    borderColor: "white",
     // margin: 1,
   },
   cellText: {
