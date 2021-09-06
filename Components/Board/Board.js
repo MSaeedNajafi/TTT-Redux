@@ -14,7 +14,7 @@ import {
   X_Sym,
   O_Sym,
 } from "../../Redux/tttReducer";
-
+import COL from "../Colors";
 const generateBoard = (mapData, updateBoard) => {
   const board = [];
   for (let i = 0; i < mapData.length; i++) {
@@ -28,9 +28,9 @@ const generateBoard = (mapData, updateBoard) => {
             {
               backgroundColor: mapData[i][j]
                 ? mapData[i][j] === X_Sym
-                  ? "#ffdb00"
-                  : "#7e9acf"
-                : "#7b7b7b",
+                  ? COL.X_Sym_COLOR
+                  : COL.O_Sym_COLOR
+                : COL.Board_COLOR,
               borderTopLeftRadius: i === 0 && j === 0 ? 5 : 0,
               borderTopRightRadius: i === 0 && j === row.length - 1 ? 5 : 0,
               borderBottomLeftRadius: i === row.length - 1 && j === 0 ? 5 : 0,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     flex: 6,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#e01016",
+    backgroundColor: COL.Board_BG_COLOR,
   },
   cell: {
     // width: 100,
@@ -164,13 +164,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "white",
+    borderColor: COL.Board_Border_COLOR,
     // margin: 1,
   },
   cellText: {
     fontSize: 24,
     fontWeight: "bold",
-    // color: "white",
+    color: COL.Board_Sym_COLOR,
   },
   row: {
     flexDirection: "row",

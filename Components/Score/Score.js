@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
+import COL from "../Colors";
 
 export default function Score() {
   const player1wins = useSelector((state) => state.player1Score);
@@ -29,21 +30,21 @@ const styles = StyleSheet.create({
     // padding: 10,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
+    backgroundColor: COL.Score_BG_COLOR,
     borderTopWidth: 1,
-    borderColor: "white",
+    borderColor: COL.Section_Border_COLOR,
   },
   scoreText: {
     fontSize: 24,
     textTransform: "uppercase",
-    color: "white",
+    color: COL.Text_COLOR,
     fontWeight: "bold",
   },
   player: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
+    backgroundColor: COL.Score_BG_COLOR,
     flexDirection: "row",
     paddingLeft: 10,
     paddingRight: 10,
@@ -53,10 +54,10 @@ const styles = StyleSheet.create({
   playerScore: {
     fontSize: 24,
     textTransform: "uppercase",
-    backgroundColor: "#e01016",
+    backgroundColor: COL.Board_BG_COLOR,
     padding: 10,
-    borderColor: "white",
+    borderColor: COL.Section_Border_COLOR,
     borderWidth: 2,
-    color: "white",
+    color: COL.Text_COLOR,
   },
 });

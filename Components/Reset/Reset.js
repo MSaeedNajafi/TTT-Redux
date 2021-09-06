@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { resetBoard, resetScore } from "../../Redux/tttReducer";
+import COL from "../Colors";
 
 export default function Reset(props) {
   const dispatch = useDispatch();
@@ -15,7 +16,10 @@ export default function Reset(props) {
           <View
             style={[
               styles.button,
-              { borderRightColor: "white", borderRightWidth: 1 },
+              {
+                borderRightColor: COL.Section_Border_COLOR,
+                borderRightWidth: 1,
+              },
             ]}
           >
             <TouchableOpacity
@@ -30,7 +34,10 @@ export default function Reset(props) {
           <View
             style={[
               styles.button,
-              { borderRightColor: "white", borderRightWidth: 1 },
+              {
+                borderRightColor: COL.Section_Border_COLOR,
+                borderRightWidth: 1,
+              },
             ]}
           >
             <TouchableOpacity
@@ -65,10 +72,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
+    backgroundColor: COL.Score_BG_COLOR,
     flexDirection: "row",
     borderTopWidth: 1,
-    borderColor: "white",
+    borderColor: COL.Section_Border_COLOR,
   },
   button: {
     flex: 1,
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
   clickText: {
     // fontSize: 20,
     textTransform: "uppercase",
-    color: "white",
+    color: COL.Text_COLOR,
     textAlign: "center",
   },
 });

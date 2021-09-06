@@ -2,7 +2,8 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
-import { X_Sym } from "../../Redux/tttReducer";
+import { X_Sym } from "../../tttReducer";
+import COL from "../Colors";
 
 export default function Turn() {
   const turnSym = useSelector((state) => state.turnSym);
@@ -12,14 +13,14 @@ export default function Turn() {
     <>
       <View style={styles.winner}>
         {!winner && (
-          <Text style={{ fontSize: 24, color: "white" }}>
+          <Text style={{ fontSize: 24, color: COL.Text_COLOR }}>
             {turnSym === X_Sym
               ? `It's Player 1's Turn: ${turnSym}`
               : `It's Player 2's Turn: ${turnSym}`}
           </Text>
         )}
         {winner && (
-          <Text style={{ fontSize: 24, color: "white" }}>{winner}</Text>
+          <Text style={{ fontSize: 24, color: COL.Text_COLOR }}>{winner}</Text>
         )}
       </View>
     </>
@@ -31,8 +32,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
-    borderBottomColor: "white",
+    backgroundColor: COL.Score_BG_COLOR,
+    borderBottomColor: COL.Section_Border_COLOR,
     borderBottomWidth: 1,
   },
 });
