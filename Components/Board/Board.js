@@ -13,7 +13,7 @@ import {
   player2Win,
   X_Sym,
   O_Sym,
-} from "../../tttReducer";
+} from "../../Redux/tttReducer";
 
 const generateBoard = (mapData, updateBoard) => {
   const board = [];

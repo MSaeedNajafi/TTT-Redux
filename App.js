@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import TTT from "./Components/TTT";
-import boardReducer from "./tttReducer";
+import boardReducer from "./Redux/tttReducer";
 
 const store = createStore(boardReducer);
 

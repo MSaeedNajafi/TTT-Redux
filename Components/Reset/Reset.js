@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-import { resetBoard, resetScore } from "../../tttReducer";
+import { resetBoard, resetScore } from "../../Redux/tttReducer";
 
 export default function Reset(props) {
   const dispatch = useDispatch();
