@@ -1,6 +1,7 @@
 // Borad Actions
 const UPDATEBOARD = "UPDATEBOARD";
 const UPDATEBOARD4X4 = "UPDATEBOARD4X4";
+const UPDATEBOARD5X5 = "UPDATEBOARD5X5";
 const RESETBOARD = "RESETBOARD";
 const RESETSCORE = "RESETSCORE";
 const PLAYER1SCORE = "PLAYER1SCORE";
@@ -14,6 +15,11 @@ export const updateBoard = (i, j) => ({
 export const updateBoard4x4 = (ii, jj) => ({
   type: UPDATEBOARD4X4,
   payload: { ii, jj },
+});
+
+export const updateBoard5x5 = (iii, jjj) => ({
+  type: UPDATEBOARD5X5,
+  payload: { iii, jjj },
 });
 
 export const resetBoard = () => ({
@@ -67,6 +73,13 @@ const initialState = {
     [null, null, null, null],
     [null, null, null, null],
   ],
+  board5x5: [
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+  ],
   turnSym: X_Sym,
   startSym: X_Sym,
   winner: undefined,
@@ -104,6 +117,20 @@ const boardReducer = (state = initialState, action) => {
         ),
         turnSym: state.turnSym === X_Sym ? O_Sym : X_Sym,
       };
+    case UPDATEBOARD5X5:
+      const { iii, jjj } = action.payload;
+      return {
+        ...state,
+        moves: state.moves + 1,
+        board5x5: state.board5x5.map((item1, index1) =>
+          index1 === iii
+            ? item1.map((item2, index2) =>
+                index2 === jjj ? state.turnSym : item2
+              )
+            : item1
+        ),
+        turnSym: state.turnSym === X_Sym ? O_Sym : X_Sym,
+      };
     case RESETBOARD:
       return {
         ...state,
@@ -118,6 +145,13 @@ const boardReducer = (state = initialState, action) => {
           [null, null, null, null],
           [null, null, null, null],
           [null, null, null, null],
+        ],
+        board5x5: [
+          [null, null, null, null, null],
+          [null, null, null, null, null],
+          [null, null, null, null, null],
+          [null, null, null, null, null],
+          [null, null, null, null, null],
         ],
         turnSym: state.startSym === X_Sym ? O_Sym : X_Sym,
         startSym: state.startSym === X_Sym ? O_Sym : X_Sym,
@@ -137,6 +171,13 @@ const boardReducer = (state = initialState, action) => {
           [null, null, null, null],
           [null, null, null, null],
           [null, null, null, null],
+        ],
+        board5x5: [
+          [null, null, null, null, null],
+          [null, null, null, null, null],
+          [null, null, null, null, null],
+          [null, null, null, null, null],
+          [null, null, null, null, null],
         ],
         startSym: X_Sym,
         turnSym: X_Sym,

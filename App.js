@@ -18,7 +18,7 @@ const store = createStore(boardReducer);
 const App = () => {
   const [boardSize, setBoardSize] = useState("");
   const [board, setBoard] = useState(false);
-
+  // console.log(store.getState());
   function makeFalse() {
     setBoard(false);
   }
@@ -35,9 +35,9 @@ const App = () => {
         >
           <View
             style={{
-              flex: 1,
+              flex: 5,
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "flex-end",
             }}
           >
             <Text style={{ fontSize: 24 }}>Choose your Board</Text>
@@ -100,6 +100,32 @@ const App = () => {
                 }}
               >
                 <Text style={{ fontSize: 24 }}>4x4</Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 5,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 20,
+                  backgroundColor: "cornflowerblue",
+                  width: "100%",
+                  padding: 20,
+                  borderWidth: 2,
+                  borderRadius: 5,
+                }}
+                onPress={() => {
+                  setBoardSize("5x5"), setBoard(true);
+                }}
+              >
+                <Text style={{ fontSize: 24 }}>5x5</Text>
               </TouchableOpacity>
             </View>
           </View>

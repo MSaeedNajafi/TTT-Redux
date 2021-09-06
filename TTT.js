@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   updateBoard,
   updateBoard4x4,
+  updateBoard5x5,
   resetBoard,
   resetScore,
   player1Score,
@@ -34,7 +35,7 @@ const generateBoard = (mapData, updateBoard) => {
             styles.cell,
             {
               backgroundColor: mapData[i][j]
-                ? mapData[i][j] === "X"
+                ? mapData[i][j] === X_Sym
                   ? "#ffdb00"
                   : "#7e9acf"
                 : "#7b7b7b",
@@ -44,9 +45,9 @@ const generateBoard = (mapData, updateBoard) => {
               borderBottomRightRadius:
                 i === row.length - 1 && j === row.length - 1 ? 5 : 0,
               width:
-                mapData.length === 3 ? 100 : mapData.length === 4 ? 75 : 50,
+                mapData.length === 3 ? 100 : mapData.length === 4 ? 75 : 60,
               height:
-                mapData.length === 3 ? 100 : mapData.length === 4 ? 75 : 50,
+                mapData.length === 3 ? 100 : mapData.length === 4 ? 75 : 60,
             },
           ]}
           key={`cellID[${i}][${j}]`}
@@ -112,13 +113,18 @@ export default function TTT(props) {
   const dispatch = useDispatch();
   const moves = useSelector((state) => state.moves);
   const gboard = useSelector((state) =>
-    props.boardSize === "4x4" ? state.board4x4 : state.board
+    props.boardSize === "4x4"
+      ? state.board4x4
+      : props.boardSize === "5x5"
+      ? state.board5x5
+      : state.board
   );
   const turnSym = useSelector((state) => state.turnSym);
   const player1wins = useSelector((state) => state.player1Score);
   const player2wins = useSelector((state) => state.player2Score);
   const winner = useSelector((state) => state.winner);
   useEffect(() => {
+    // console.log(gboard)
     const win = getWinner(gboard);
     if (win) {
       if (turnSym === X_Sym) {
@@ -175,6 +181,8 @@ export default function TTT(props) {
               dispatch(updateBoard4x4(i, j));
             } else if (props.boardSize === "3x3") {
               dispatch(updateBoard(i, j));
+            } else if (props.boardSize === "5x5") {
+              dispatch(updateBoard5x5(i, j));
             }
           })}
         </View>
