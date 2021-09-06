@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from "react-native";
 
-import TTT from "./TTT";
+import TTT from "./Components/TTT";
 import boardReducer from "./tttReducer";
 
 const store = createStore(boardReducer);
