@@ -144,16 +144,7 @@ export default function TTT(props) {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "black",
-            borderBottomColor: "white",
-            borderBottomWidth: 1,
-          }}
-        >
+        <View style={styles.winner}>
           {!winner && (
             <Text style={{ fontSize: 24, color: "white" }}>
               {turnSym === X_Sym
@@ -165,14 +156,7 @@ export default function TTT(props) {
             <Text style={{ fontSize: 24, color: "white" }}>{winner}</Text>
           )}
         </View>
-        <View
-          style={{
-            flex: 6,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#e01016",
-          }}
-        >
+        <View style={styles.board}>
           {generateBoard(gboard, (i, j) => {
             if (winner) {
               return;
@@ -186,193 +170,55 @@ export default function TTT(props) {
             }
           })}
         </View>
-        <View
-          style={{
-            padding: 10,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "black",
-            borderTopWidth: 1,
-            borderColor: "white",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 24,
-              textTransform: "uppercase",
-              color: "white",
-              fontWeight: "bold",
-            }}
-          >
-            Score
-          </Text>
+        <View style={styles.score}>
+          <Text style={styles.scoreText}>Score</Text>
         </View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "black",
-            flexDirection: "row",
-            paddingLeft: 10,
-            paddingRight: 10,
-            paddingBottom: 10,
-          }}
-        >
-          <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-          >
-            <Text
-              style={{
-                fontSize: 24,
-                textTransform: "uppercase",
-                backgroundColor: "#e01016",
-                padding: 10,
-                borderColor: "white",
-                borderWidth: 2,
-                color: "white",
-              }}
-            >
-              Player 1: {player1wins}
-            </Text>
+        <View style={styles.player}>
+          <View style={styles.playerText}>
+            <Text style={styles.playerScore}>Player 1: {player1wins}</Text>
           </View>
-          <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-          >
-            <Text
-              style={{
-                fontSize: 24,
-                textTransform: "uppercase",
-                backgroundColor: "#e01016",
-                padding: 10,
-                borderColor: "white",
-                borderWidth: 2,
-                color: "white",
-              }}
-            >
-              Player 2: {player2wins}
-            </Text>
+          <View style={styles.playerText}>
+            <Text style={styles.playerScore}>Player 2: {player2wins}</Text>
           </View>
         </View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#e31414",
-            borderTopWidth: 1,
-            borderColor: "white",
-          }}
-        >
+        <View style={styles.move}>
           <Text style={{ fontSize: 20, color: "white", textAlign: "center" }}>
             <Text style={{ fontSize: 24, color: "white" }}>{moves}</Text> moves
             made.
           </Text>
         </View>
         {winner && (
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
-              borderTopWidth: 1,
-              borderColor: "white",
-              backgroundColor: "black",
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                borderRightColor: "white",
-                borderRightWidth: 1,
-              }}
-            >
+          <View style={styles.winner}>
+            <View style={styles.button}>
               <TouchableOpacity
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "100%",
-                }}
+                style={styles.click}
                 onPress={() => {
                   dispatch(resetBoard());
                 }}
               >
-                <Text
-                  style={{
-                    // fontSize: 20,
-                    textTransform: "uppercase",
-                    color: "white",
-                    textAlign: "center",
-                  }}
-                >
-                  Reset borad
-                </Text>
+                <Text style={styles.buttonText}>Reset borad</Text>
               </TouchableOpacity>
             </View>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: "black",
-                borderLeftColor: "white",
-                borderLeftWidth: 1,
-              }}
-            >
+            <View style={styles.button}>
               <TouchableOpacity
                 onPress={() => {
                   dispatch(resetScore());
                 }}
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                style={styles.click}
               >
-                <Text
-                  style={{
-                    // fontSize: 20,
-                    textTransform: "uppercase",
-                    color: "white",
-                    textAlign: "center",
-                  }}
-                >
-                  reset score
-                </Text>
+                <Text style={styles.buttonText}>reset score</Text>
               </TouchableOpacity>
             </View>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: "black",
-                borderLeftColor: "white",
-                borderLeftWidth: 1,
-              }}
-            >
+            <View style={styles.button}>
               <TouchableOpacity
                 onPress={() => {
                   props.makeFalse();
                   dispatch(resetBoard());
                   dispatch(resetScore());
                 }}
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                style={styles.buttonText}
               >
-                <Text
-                  style={{
-                    // fontSize: 24,
-                    textTransform: "uppercase",
-                    color: "white",
-                    textAlign: "center",
-                  }}
-                >
-                  Change Grid
-                </Text>
+                <Text style={styles.click}>Change Grid</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -403,5 +249,88 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     // color: "white",
+  },
+  playerScore: {
+    fontSize: 24,
+    textTransform: "uppercase",
+    backgroundColor: "#e01016",
+    padding: 10,
+    borderColor: "white",
+    borderWidth: 2,
+    color: "white",
+  },
+  winner: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "black",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+  },
+  board: {
+    flex: 6,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#e01016",
+  },
+  score: {
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "black",
+    borderTopWidth: 1,
+    borderColor: "white",
+  },
+  scoreText: {
+    fontSize: 24,
+    textTransform: "uppercase",
+    color: "white",
+    fontWeight: "bold",
+  },
+  player: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "black",
+    flexDirection: "row",
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+  },
+  playerText: { flex: 1, alignItems: "center", justifyContent: "center" },
+  move: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#e31414",
+    borderTopWidth: 1,
+    borderColor: "white",
+  },
+  winner: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    borderTopWidth: 1,
+    borderColor: "white",
+    backgroundColor: "black",
+  },
+  button: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRightColor: "white",
+    borderRightWidth: 1,
+  },
+  click: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+  buttonText: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
