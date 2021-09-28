@@ -4,7 +4,7 @@ const COL = {
   Board_Border_COLOR: "white",
   Board_Sym_COLOR: "black",
   X_Sym_COLOR: "#ffdb00",
-  O_Sym_COLOR: "#7e9acf",
+  O_Sym_COLOR: "#345ee6",
 
   Score_BG_COLOR: "black",
 
